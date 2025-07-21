@@ -1,19 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portifólio</title>
-    <style>
-        *{
-            padding:0; margin:0
-        }
-
-        h2 { text-align: center; margin:20% }
-        
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat Simples</title>
+  <style>
+    body { font-family: Arial; margin: 0; padding: 0; display: flex; flex-direction: column; height: 100vh; }
+    #chat { flex: 1; padding: 10px; overflow-y: auto; border-bottom: 1px solid #ccc; }
+    .msg { margin: 5px 0; }
+    .msg.me { text-align: right; color: blue; }
+    #form { display: flex; padding: 10px; }
+    #msgInput { flex: 1; padding: 5px; }
+    #sendBtn { padding: 5px 10px; }
+  </style>
 </head>
 <body>
-    <h2>Em Contrução</h2>
+  <div id="chat"></div>
+
+  <form id="form">
+    <input type="text" id="msgInput" placeholder="Digite sua mensagem..." autocomplete="off" />
+    <button type="submit" id="sendBtn">Enviar</button>
+  </form>
+
+  <script>
+      const form = document.getElementById('form');
+const input = document.getElementById('msgInput');
+const chat = document.getElementById('chat');
+
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+
+  const msg = input.value.trim();
+  if (msg === '') return;
+
+  addMessage('me', msg); // envia
+  simulateReply();       // simula resposta
+
+  input.value = '';
+});
+
+function addMessage(sender, text) {
+  const div = document.createElement('div');
+  div.classList.add('msg', sender);
+  div.innerText = text;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function simulateReply() {
+  setTimeout(() => {
+    const respostas = ['Oi!', 'Tudo bem?', 'Legal!', 'Estou aqui.', 'Como posso ajudar?'];
+    const resposta = respostas[Math.floor(Math.random() * respostas.length)];
+    addMessage('bot', resposta);
+  }, 1000);
+}
+  </script>
 </body>
 </html>
